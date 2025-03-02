@@ -1,5 +1,5 @@
 <p align="center">
-<img src="../img/terrantar_labgeo.png" width="1200">
+<img src="../img/soil_respiration_github.png" width="1200">
 </p>
 
 <p>&nbsp;</p>
