@@ -30,11 +30,8 @@ library(viridis)
 
 # Environment setup
 rm(list = ls())
-setwd("//200.235.173.229/dados_processamento/cassio/R/soil_respiration")
 gc()
-#>           used  (Mb) gc trigger  (Mb) max used  (Mb)
-#> Ncells 3498052 186.9    6615838 353.4  4993482 266.7
-#> Vcells 5596731  42.7   12255594  93.6  9328940  71.2
+
 sf_use_s2(FALSE)
 #> Spherical geometry (s2) switched off
 
@@ -46,7 +43,6 @@ biome <- st_read("./vect/biome.shp") %>%
   st_transform(4326) %>% 
   st_make_valid()
 #> Reading layer `biome' from data source 
-#>   `\\200.235.173.229\dados_processamento\cassio\R\soil_respiration\vect\biome.shp' 
 #>   using driver `ESRI Shapefile'
 #> Simple feature collection with 16 features and 1 field
 #> Geometry type: MULTIPOLYGON
@@ -90,7 +86,6 @@ vars_y_sf_biome <- lapply(resp_files, function(f) {
     st_make_valid()
 })
 #> Reading layer `rh' from data source 
-#>   `\\200.235.173.229\dados_processamento\cassio\R\soil_respiration\vect\rh.shp' 
 #>   using driver `ESRI Shapefile'
 #> Simple feature collection with 849 features and 1 field
 #> Geometry type: POINT
@@ -102,7 +97,6 @@ vars_y_sf_biome <- lapply(resp_files, function(f) {
 #> Warning: attribute variables are assumed to be spatially constant throughout
 #> all geometries
 #> Reading layer `rs' from data source 
-#>   `\\200.235.173.229\dados_processamento\cassio\R\soil_respiration\vect\rs.shp' 
 #>   using driver `ESRI Shapefile'
 #> Simple feature collection with 3329 features and 3 fields
 #> Geometry type: POINT
@@ -121,7 +115,6 @@ vars_y_sf_biome_g <- lapply(resp_files, function(f) {
     st_make_valid()
 })
 #> Reading layer `rh' from data source 
-#>   `\\200.235.173.229\dados_processamento\cassio\R\soil_respiration\vect\rh.shp' 
 #>   using driver `ESRI Shapefile'
 #> Simple feature collection with 849 features and 1 field
 #> Geometry type: POINT
@@ -133,7 +126,6 @@ vars_y_sf_biome_g <- lapply(resp_files, function(f) {
 #> Warning: attribute variables are assumed to be spatially constant throughout
 #> all geometries
 #> Reading layer `rs' from data source 
-#>   `\\200.235.173.229\dados_processamento\cassio\R\soil_respiration\vect\rs.shp' 
 #>   using driver `ESRI Shapefile'
 #> Simple feature collection with 3329 features and 3 fields
 #> Geometry type: POINT
@@ -164,7 +156,9 @@ plot(st_geometry(biome),
 plot(st_geometry(vars_y_sf_biome[[1]]), add = TRUE, pch = 19, col = "#0000FF", cex = 1)
 ```
 
-![](https://i.imgur.com/xZStxbf.png)<!-- -->
+<p align="center">
+<img src="../img/biome_sample.png" width="800">
+</p>
 
 ``` r
 
@@ -183,6 +177,6 @@ plot(st_geometry(biome_g),
 plot(st_geometry(vars_y_sf_biome_g[[1]]), add = TRUE, pch = 19, col = "#0000FF", cex = 1)
 ```
 
-![](https://i.imgur.com/tjzNwuB.png)<!-- -->
-
-<sup>Created on 2025-03-02 with [reprex v2.1.1](https://reprex.tidyverse.org)</sup>
+<p align="center">
+<img src="../img/biome_group_sample.png" width="800">
+</p>
