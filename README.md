@@ -37,4 +37,4 @@ For more information or collaboration opportunities, please contact us at:
 We appreciate your interest in this research. We hope this repository facilitates result replication and contributes to future studies on soil carbon modeling and the application of machine learning in global soil respiration projections.
 
 ### Reference:
-Gomes, L., Moquedace, C. M., Souza, I. F., Vesterdal, L., Veloso, G. V., Francelino, M. R., Schaefer, C., Morris, K. A., Vargas, R., Bond-Lamberty, B., & Fernandes Filho, E. I. (2025). *On the importance of soil texture for predicting future global soil respiration*. *Journal of Geophysical Research - Biogeosciences*, xx(x), xx. https://doi.org/xxxxxxxxxxxxx
+Gomes, L., Moquedace, C. M., Souza, I. F., Vesterdal, L., Veloso, G. V., Francelino, M. R., Schaefer, C., Morris, K. A., Vargas, R., Bond-Lamberty, B., & Fernandes Filho, E. I. (2025). On the importance of soil texture for predicting future global soil respiration. *Journal of Geophysical Research - Biogeosciences*, xx(x), xx. DOI: [10.1016/xxxxxxxxxxx](https://doi.org/10.1016/xxxxxxxxxxx)
