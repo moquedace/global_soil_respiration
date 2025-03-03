@@ -4,7 +4,7 @@
 
 <p>&nbsp;</p>
 
-# Partial dependence analysis for total soil respiration (Rs) and heterotrophic respiration (Rh) models.
+# Partial dependence analysis for total soil respiration (Rs) and heterotrophic respiration (Rh) models
 
 ## Load packages
 ``` r
