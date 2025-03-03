@@ -21,8 +21,10 @@ Our objective with this study was to explore the influence of soil texture on fu
 - [Global soil respiration model training without restriction on data division](./pages/comparison_models.md)<br>
 
 #### Datasets:
-- [Input data samples used in the study](./datasets/dataset_soil_respiration.csv)<br>
-- [Final dataset for model fitting and result reproduction](./datasets/final_model_data.csv)<br>
+- [Final dataset for total soil respiration (Rs) and covariates includes soil variables.](./datasets/finaldataset_rs_withsoil.csv)<br>
+- [Final dataset for heterotrophic respiration (Rh) and covariates includes soil variables.](./datasets/finaldataset_rh_withsoil.csv)<br>
+- [Final dataset for total soil respiration (Rs) and covariates excludes soil variables.](./datasets/finaldataset_rs_nosoil.csv)<br>
+- [Final dataset for heterotrophic respiration (Rh) and covariates excludes soil variables.](./datasets/finaldataset_rs_withsoil.csv)<br>
 
 #### Results:
 The final maps (mean, quantiles, and coefficient of variation) of soil respiration projections and their associated uncertainties are available for download on Zenodo:<br>
