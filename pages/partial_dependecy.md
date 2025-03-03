@@ -49,7 +49,7 @@ sapply(pkg, require, character.only = T)
 rm(list = ls())
 ```
 
-## Partial dependency function 
+## Custom partial dependence function definition
 ``` r
 partial_dependency <- function(model, data, y_var, x_var, lci = 0.25, uci = 0.75, delta = FALSE) {
   if (!any(class(model) %in% c("randomForest", "list"))) 
@@ -87,7 +87,7 @@ partial_dependency <- function(model, data, y_var, x_var, lci = 0.25, uci = 0.75
   return(result_df)
 }
 ```
-## Load models 
+## Model loading from saved files
 ``` r
 model_files <- list.files(
   path = "./results/img", 
@@ -99,7 +99,7 @@ model_files <- list.files(
 ``` r
 partial_results <- list()
 ```
-## Process models
+## Main processing loop for partial dependence analysis
 ``` r
 for (model_idx in seq_along(model_files)) {
   start_time <- Sys.time()
