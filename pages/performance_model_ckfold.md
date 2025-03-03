@@ -4,7 +4,7 @@
 
 <p>&nbsp;</p>
 
-# Performance Soil Respiration Model Training Without Restriction on Data Division
+# Performance Soil Respiration Model Training with Data Division Restriction
 
 ## Load Required Packages
 ```{r packages}
@@ -79,32 +79,11 @@ factor_var <- "local"         # Categorical variable identifier
 
 ## Main Analysis Workflow
 ```{r main_loop, results='hide'}
-# Iterate through each input file
 for (i in seq_along(data_files)) {
   start_time <- Sys.time()
-  cat("\nProcessing", target_vars[i], "dataset...\n")
+  current_var <- target_vars[i]
   
-  # Load and preprocess data
-  raw_data <- read.csv2(data_files[i])
-  
-  # Data cleaning pipeline
-  processed_data <- raw_data %>%
-    filter(!!sym(target_vars[i]) > 0) %>%    # Remove zero/negative values
-    na.omit() %>%                            # Remove missing values
-    mutate_at(factor_var, as.factor) %>%     # Convert to factor
-    dplyr::select(-nearZeroVar(., names = TRUE))  # Remove near-zero variance predictors
-  
-  # Correlation-based feature elimination
-  cor_matrix <- processed_data %>%
-    dplyr::select(-one_of(target_vars[i])) %>%
-    dplyr::select_if(is.numeric) %>%
-    cor(method = "spearman")
-  
-  high_cor <- findCorrelation(cor_matrix, cutoff = 0.95, names = TRUE)
-  processed_data <- processed_data %>% 
-    dplyr::select(-one_of(high_cor), -local)
-  
-  # Initialize result containers
+  # Initialize performance tracking
   performance_df <- data.frame(
     model = character(nruns),
     n_train = integer(nruns),
@@ -116,118 +95,120 @@ for (i in seq_along(data_files)) {
     RMSE_test = numeric(nruns),
     Rsquared_test = numeric(nruns),
     MAE_null = numeric(nruns),
-    RMSE_null = numeric(nruns))
+    RMSE_null = numeric(nruns)
+  )
+
+  # Data Preparation with Group Handling
+  processed_data <- raw_data %>%
+    filter(!!sym(current_var) > 0) %>%
+    na.omit() %>%
+    mutate(local = as.factor(local)) %>%
+    dplyr::select(-nearZeroVar(., names = TRUE))
   
-  # Initialize parallel backend
-  registerDoParallel(cl)
-  
-  # Multiple experimental runs
-  set.seed(666)
-  run_seeds <- sample(1:100000, nruns)
-  
+  # Group-based KFold Preparation
+  group_stats <- processed_data %>%
+    group_by(local) %>%
+    summarise(target_mean = mean(!!sym(current_var))) %>%
+    as.data.frame()
+
+  # Main Experiment Loop
   for (n in 1:nruns) {
-    iteration_start <- Sys.time()
-    cat("Run", n, "/", nruns, "-", target_vars[i], "\n")
-    
-    # Data partitioning
     set.seed(run_seeds[n])
-    train_idx <- createDataPartition(processed_data[, target_vars[i]], 
-                                    p = 0.75, list = FALSE)
-    train_data <- processed_data[train_idx, ]
-    test_data <- processed_data[-train_idx, ]
     
-    # Feature Selection (RFE for first target variable)
-    if (target_vars[i] == "rs") {
-      # Recursive Feature Elimination setup
+    # Stratified Group Split
+    train_groups <- createDataPartition(group_stats$target_mean, p = 0.75, list = FALSE)
+    train_locations <- group_stats$local[train_groups]
+    
+    # Data Splitting
+    train_set <- processed_data %>% 
+      filter(local %in% train_locations) %>%
+      dplyr::select(-local)
+    
+    test_set <- processed_data %>%
+      filter(!local %in% train_locations) %>%
+      dplyr::select(-local)
+    
+    # Grouped KFold Indices
+    group_folds <- groupKFold(processed_data$local[processed_data$local %in% train_locations], 
+                             k = fold_rfe)
+    
+    # RFE Configuration with Grouped CV
+    if(current_var == "rs") {
       rfe_ctrl <- rfeControl(
         method = "repeatedcv",
+        index = group_folds,
         repeats = rep_rfe,
         number = fold_rfe,
-        verbose = FALSE)
+        verbose = FALSE
+      )
       
-      # RFE execution
+      # RFE Execution
       rfe_result <- rfe(
-        x = train_data %>% dplyr::select(-target_vars[i]),
-        y = train_data[[target_vars[i]]],
+        x = train_set %>% dplyr::select(-current_var),
+        y = train_set[[current_var]],
         sizes = size_rfe,
         metric = metric_opt,
         rfeControl = rfe_ctrl,
-        method = selected_model)
+        method = selected_model
+      )
       
       # Save RFE results
       write.csv2(rfe_result$results,
-                file = paste0(results_path, "select/rfe/metric/", target_vars[i],
+                file = paste0(results_path, "select/rfe/metric/", current_var,
                             "/RFE_metrics_", n, ".csv"), 
                 row.names = FALSE)
       
-      # Select optimal features
       optimal_features <- predictors(rfe_result)
-      train_data <- train_data %>% 
-        dplyr::select(all_of(c(target_vars[i], optimal_features)))
+      train_set <- train_set %>% dplyr::select(all_of(c(current_var, optimal_features)))
     }
     
-    # Model Training Configuration
+    # Model Training with Grouped CV
     train_ctrl <- trainControl(
       method = "repeatedcv",
+      index = group_folds,
       number = fold_model,
       repeats = rep_model,
-      savePredictions = TRUE)
+      savePredictions = TRUE
+    )
     
-    # Model Training
     final_model <- train(
-      x = train_data %>% dplyr::select(-target_vars[i]),
-      y = train_data[[target_vars[i]]],
+      x = train_set %>% dplyr::select(-current_var),
+      y = train_set[[current_var]],
       method = selected_model,
       metric = metric_opt,
       trControl = train_ctrl,
       tuneLength = tune_length,
-      importance = TRUE)
+      importance = TRUE
+    )
     
     # Performance Evaluation
-    train_perf <- getTrainPerf(final_model)
-    test_pred <- predict(final_model, test_data)
-    test_perf <- postResample(test_pred, test_data[[target_vars[i]]])
+    test_pred <- predict(final_model, test_set)
+    test_perf <- postResample(test_pred, test_set[[current_var]])
     
-    # Null model comparison
-    null_pred <- rep(mean(test_data[[target_vars[i]]], nrow(test_data))
-    null_perf <- postResample(null_pred, test_data[[target_vars[i]]])
-    
-    # Store results
+    # Store Results
     performance_df[n,] <- c(
       final_model$modelInfo$label,
-      nrow(train_data),
-      train_perf$TrainMAE,
-      train_perf$TrainRMSE,
-      train_perf$TrainRsquared,
-      nrow(test_data),
+      nrow(train_set),
+      getTrainPerf(final_model)$TrainMAE,
+      getTrainPerf(final_model)$TrainRMSE,
+      getTrainPerf(final_model)$TrainRsquared,
+      nrow(test_set),
       test_perf["MAE"],
       test_perf["RMSE"],
       test_perf["Rsquared"],
       null_perf["MAE"],
-      null_perf["RMSE"])
+      null_perf["RMSE"]
+    )
     
-    # Save variable importance
-    var_importance <- varImp(final_model)$importance %>%
-      tibble::rownames_to_column("predictor") %>%
-      mutate(run = n)
-    
-    write.csv2(var_importance,
-              paste0(results_path, "performance/imp_pred/", target_vars[i], "/",
-                    "variable_importance_", n, ".csv"), 
-              row.names = FALSE)
-    
-    # Save intermediate results
+    # Save Iteration Results
     write.csv2(performance_df, 
-              paste0(results_path, "performance/csv/", target_vars[i], 
+              paste0(results_path, "performance/csv/", current_var, 
                     "_performance.csv"), 
               row.names = FALSE)
     
-    # Cleanup memory
-    rm(final_model, var_importance)
+    # Cleanup
+    rm(final_model, test_pred, train_set, test_set)
     gc()
-    
-    cat("Completed run", n, "in", 
-        round(difftime(Sys.time(), iteration_start, units = "mins"), 1), "minutes\n")
   }
   
   # Save aggregated results
