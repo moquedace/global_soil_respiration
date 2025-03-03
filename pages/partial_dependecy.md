@@ -1,5 +1,13 @@
+<p align="center">
+<img src="../img/soil_respiration_github.png" width="1200">
+</p>
+
+<p>&nbsp;</p>
+
+# Partial dependence analysis for total soil respiration (Rs) and heterotrophic respiration (Rh) models.
+
+## Load packages
 ``` r
-# Load packages --------------------------------------------------------------------
 pkg <- c("dplyr", "caret", "rfUtilities", "quantregForest", "tidyr",
          "beepr", "ggplot2", "stringr")
 
@@ -39,9 +47,10 @@ sapply(pkg, require, character.only = T)
 #>           TRUE           TRUE           TRUE
 
 rm(list = ls())
+```
 
-
-# Partial dependency function -----------------------------------------------------
+## Partial dependency function 
+``` r
 partial_dependency <- function(model, data, y_var, x_var, lci = 0.25, uci = 0.75, delta = FALSE) {
   if (!any(class(model) %in% c("randomForest", "list"))) 
     stop("Model must be a randomForest object")
@@ -77,18 +86,21 @@ partial_dependency <- function(model, data, y_var, x_var, lci = 0.25, uci = 0.75
   
   return(result_df)
 }
-
-# Load models ----------------------------------------------------------------------
+```
+## Load models 
+``` r
 model_files <- list.files(
   path = "./results/img", 
   pattern = ".RData$",
   full.names = TRUE
 )
-
-# Initialize storage list
+```
+## Initialize storage list
+``` r
 partial_results <- list()
-
-# Process models -------------------------------------------------------------------
+```
+## Process models
+``` r
 for (model_idx in seq_along(model_files)) {
   start_time <- Sys.time()
   load(model_files[model_idx])
@@ -121,11 +133,13 @@ for (model_idx in seq_along(model_files)) {
 save(partial_results, file = "./results/img_out/partial_dependency_median.RData")
 
 
-
-# Load results ---------------------------------------------------------------------
+```
+## Load results
+``` r
 load("./results/img_out/partial_dependency_median.RData")
-
-# Plotting section 1 --------------------------------------------------------------
+```
+## Plotting section 1 
+``` r
 ggplot(partial_results[[1]][[1]], aes(y = rs, x = npp)) +
   geom_ribbon(aes(ymin = lci, ymax = uci), alpha = 0.5) +
   geom_point() +
@@ -135,9 +149,10 @@ ggplot(partial_results[[1]][[1]], aes(y = rs, x = npp)) +
 
 ![](https://i.imgur.com/BPtAyNn.png)<!-- -->
   
-  ``` r
 
-# Data processing for Rs plots ----------------------------------------------------
+
+## Data processing for Rs plots
+  ``` r
 rs_data <- data.frame()
 for (i in seq_along(partial_results[[1]])) {
   temp_df <- partial_results[[1]][[i]] %>% 
@@ -149,8 +164,9 @@ for (i in seq_along(partial_results[[1]])) {
     rs_data <- rbind(rs_data, temp_df)
   }
 }
-
-# Rs plot grid --------------------------------------------------------------------
+  ``` 
+## Rs plot grid
+  ``` r
 rs_plot <- ggplot(rs_data, aes(y = rs, x = value)) +
   geom_ribbon(aes(ymin = lci, ymax = uci), alpha = 0.5) +
   geom_point() +
@@ -176,8 +192,9 @@ ggsave(rs_plot,
        height = 13.436,
        units = "in")
 #> `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'
-
-# Data processing for Rh plots ----------------------------------------------------
+  ```
+## Data processing for Rh plots
+  ``` r
 rh_data <- data.frame()
 for (i in seq_along(partial_results[[2]])) {
   temp_df <- partial_results[[2]][[i]] %>% 
@@ -189,8 +206,10 @@ for (i in seq_along(partial_results[[2]])) {
     rh_data <- rbind(rh_data, temp_df)
   }
 }
+  ``` 
+## Rh plot grid 
 
-# Rh plot grid ---------------------------------------------------------------------
+  ``` r
 rh_plot <- ggplot(rh_data, aes(y = rh, x = value)) +
   geom_ribbon(aes(ymin = lci, ymax = uci), alpha = 0.5) +
   geom_point() +
@@ -216,9 +235,9 @@ ggsave(rh_plot,
        height = 13.436,
        units = "in")
 #> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
-# Combined plot --------------------------------------------------------------------
-
+  ```
+## Combined plot
+``` r
 combined_data <- bind_rows(
   rs_data %>% 
     gather(key = "process", value = "vr", -c("variable", "lci", "uci", "value")) %>% 
@@ -277,8 +296,9 @@ ggsave(full_plot,
        height = 6.718,
        units = "in")
 #> `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'
-
-# Individual variable plots --------------------------------------------------------
+  ``` 
+## Individual variable plots
+  ``` r
 for (var in unique(combined_data$variable)) {
   var_plot <- ggplot(filter(combined_data, variable == var),
                      aes(y = vr, x = value)) +
