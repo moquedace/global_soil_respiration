@@ -128,11 +128,3 @@ for (i in seq_along(ly)) {
 stopCluster(cl)
 gc()
 ```
-
-<p align="center">
-<img src="../img/imp_example.png" width="600">
-</p>
-
-<p align="center">
-<img src="../img/pred_obs_example.png" width="600">
-</p>
