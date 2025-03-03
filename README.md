@@ -17,6 +17,9 @@ Our objective with this study was to explore the influence of soil texture on fu
 - [Global soil respiration model training without restriction on data division](./pages/global_model_skfold.md)<br>
 - [Performance soil respiration model training with data division restriction](./pages/performance_model_ckfold.md)<br>
 - [Performance soil respiration model training without restriction on data division](./pages/performance_model_skfold.md)<br>
+- [Partial dependence analysis for total soil respiration (Rs) and heterotrophic respiration (Rh) models](./pages/partial_dependecy.md)<br>
+
+
 
 #### Datasets:
 - [Final dataset for total soil respiration (Rs) and covariates includes soil variables.](./datasets/finaldataset_rs_withsoil.csv)<br>
