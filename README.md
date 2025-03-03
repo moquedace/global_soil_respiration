@@ -13,8 +13,12 @@ Our objective with this study was to explore the influence of soil texture on fu
 ### Repository content:
 #### R Scripts:
 - [Distribution of samples in ecoregions](./pages/distribution_samples.md)<br>
-- [Machine Learning Predictions of Rs and Rh](./pages/ml_predictions.md)<br>
-- [Comparison Between Climate-Only and Climate + Soil Models](./pages/comparison_models.md)<br>
+- [Global soil respiration model training with data division restriction](./pages/global_model_ckfold.md)<br>
+- [Global soil respiration model training without restriction on data division](./pages/global_model_skfold.md)<br>
+- [Performance soil respiration model training with data division restriction](./pages/performance_model_ckfold.md)<br>
+- [Performance soil respiration model training without restriction on data division](./pages/performance_model_skfold.md)<br>
+- [Global soil respiration model training without restriction on data division](./pages/comparison_models.md)<br>
+- [Global soil respiration model training without restriction on data division](./pages/comparison_models.md)<br>
 
 #### Datasets:
 - [Input data samples used in the study](./datasets/dataset_soil_respiration.csv)<br>
