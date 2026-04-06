@@ -29,7 +29,7 @@ Our objective with this study was to explore the influence of soil texture on fu
 
 #### Results:
 The final maps (mean, quantiles, and coefficient of variation) of soil respiration projections and their associated uncertainties are available for download on Zenodo:<br>
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14974608.svg)](https://doi.org/10.5281/zenodo.14974608)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14991466.svg)](https://doi.org/10.5281/zenodo.14991466)
 
 ### Attention:
 The authors are not obligated to provide user support, updates, or bug fixes.
