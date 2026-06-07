@@ -1,0 +1,53 @@
+<svg width="1400" height="420" viewBox="0 0 1400 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Global soil respiration under climate change</title>
+  <desc id="desc">A scientific README banner with global flux arcs, soil layers, and climate scenario labels.</desc>
+  <rect width="1400" height="420" rx="26" fill="#0d1821"/>
+  <rect x="1" y="1" width="1398" height="418" rx="25" stroke="#46a3a3" stroke-opacity="0.55" stroke-width="2"/>
+
+  <g opacity="0.18">
+    <path d="M58 278C190 208 323 202 455 260C587 318 722 320 854 258C986 196 1137 196 1296 273" stroke="#46a3a3" stroke-width="3"/>
+    <path d="M58 315C214 254 350 248 486 294C622 340 759 343 895 295C1031 247 1162 248 1296 311" stroke="#d29f36" stroke-width="2"/>
+    <path d="M58 350C198 313 345 304 493 332C641 360 789 362 936 333C1083 304 1204 312 1296 350" stroke="#e8f1f2" stroke-width="1.5"/>
+  </g>
+
+  <g transform="translate(910 58)">
+    <circle cx="150" cy="150" r="126" fill="#122331" stroke="#30475a"/>
+    <ellipse cx="150" cy="150" rx="126" ry="48" stroke="#46a3a3" stroke-width="2" opacity="0.65"/>
+    <ellipse cx="150" cy="150" rx="70" ry="126" stroke="#46a3a3" stroke-width="2" opacity="0.4"/>
+    <path d="M24 150H276" stroke="#30475a" stroke-width="2"/>
+    <path d="M150 24V276" stroke="#30475a" stroke-width="2"/>
+    <path d="M66 78C122 45 185 48 234 89" stroke="#d29f36" stroke-width="4" stroke-linecap="round"/>
+    <path d="M55 199C116 235 188 232 247 190" stroke="#89b77f" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="80" cy="105" r="7" fill="#d56b4a"/>
+    <circle cx="136" cy="70" r="7" fill="#d29f36"/>
+    <circle cx="215" cy="112" r="7" fill="#46a3a3"/>
+    <circle cx="98" cy="218" r="7" fill="#89b77f"/>
+    <circle cx="198" cy="210" r="7" fill="#e8f1f2"/>
+  </g>
+
+  <g transform="translate(77 69)">
+    <text x="0" y="0" fill="#46a3a3" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="3">SOIL TEXTURE / CLIMATE FEEDBACK / QRF</text>
+    <text x="0" y="61" fill="#f7fbfc" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="50" font-weight="800">Future global soil respiration</text>
+    <text x="0" y="110" fill="#dce8e8" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="500">R code and datasets for modelling Rs and Rh under 21st-century climate scenarios.</text>
+  </g>
+
+  <g transform="translate(77 236)" font-family="Segoe UI, Inter, Arial, sans-serif">
+    <rect x="0" y="0" width="106" height="42" rx="21" fill="#142838" stroke="#30475a"/>
+    <text x="27" y="27" fill="#f7fbfc" font-size="16" font-weight="700">1 km</text>
+    <rect x="122" y="0" width="102" height="42" rx="21" fill="#142838" stroke="#30475a"/>
+    <text x="148" y="27" fill="#f7fbfc" font-size="16" font-weight="700">QRF</text>
+    <rect x="240" y="0" width="108" height="42" rx="21" fill="#142838" stroke="#30475a"/>
+    <text x="265" y="27" fill="#f7fbfc" font-size="16" font-weight="700">Rs / Rh</text>
+    <rect x="364" y="0" width="130" height="42" rx="21" fill="#142838" stroke="#30475a"/>
+    <text x="389" y="27" fill="#f7fbfc" font-size="16" font-weight="700">SSP1-2.6</text>
+    <rect x="510" y="0" width="130" height="42" rx="21" fill="#142838" stroke="#30475a"/>
+    <text x="535" y="27" fill="#f7fbfc" font-size="16" font-weight="700">SSP3-7.0</text>
+    <rect x="656" y="0" width="130" height="42" rx="21" fill="#142838" stroke="#30475a"/>
+    <text x="681" y="27" fill="#f7fbfc" font-size="16" font-weight="700">SSP5-8.5</text>
+  </g>
+
+  <g transform="translate(80 330)">
+    <rect x="0" y="0" width="560" height="1" fill="#30475a"/>
+    <text x="0" y="34" fill="#97b7b9" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="15" font-weight="600">Soil texture changes the magnitude of projected soil carbon-climate feedbacks.</text>
+  </g>
+</svg>

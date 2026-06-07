@@ -1,47 +1,154 @@
 <p align="center">
-<img src="./img/soil_respiration_github.png" width="1200">
+  <img src="img/soil_respiration_github.png" alt="LabGeo, UFV, Department of Soils, and Aarhus University logos" width="860">
 </p>
 
-<p>&nbsp;</p>
+<p align="center">
+  <img src="img/readme_banner.svg" alt="Global soil respiration under climate change banner" width="920">
+</p>
 
-## On the importance of soil texture for predicting future global soil respiration
-Welcome to the repository dedicated to the `R language` source code for the scientific paper **On the importance of soil texture for predicting future global soil respiration**. This repository provides R scripts and datasets used to analyze and model the influence of soil texture on global soil respiration under future climate change scenarios.
+<h1 align="center">On the Importance of Soil Texture for Predicting<br>Future Global Soil Respiration</h1>
 
-### Objective:
-Our objective with this study was to explore the influence of soil texture on future global soil respiration (Rs and Rh) under climate change scenarios up to 2100, considering three Shared Socioeconomic Pathways (SSP126, SSP370, and SSP585). The analysis examines how the inclusion or exclusion of soil texture-related variables affects the predictions of Rs and Rh, allowing for the assessment of their combined effects with climate change over time.
+<p align="center">
+  <strong>R scripts and datasets supporting global projections of total and heterotrophic soil respiration under 21st-century climate scenarios.</strong>
+</p>
 
-### Repository content:
-#### R Scripts:
-- [Distribution of samples in ecoregions](./pages/distribution_samples.md)<br>
-- [Global soil respiration model training with data division restriction](./pages/global_model_ckfold.md)<br>
-- [Global soil respiration model training without restriction on data division](./pages/global_model_skfold.md)<br>
-- [Performance soil respiration model training with data division restriction](./pages/performance_model_ckfold.md)<br>
-- [Performance soil respiration model training without restriction on data division](./pages/performance_model_skfold.md)<br>
-- [Partial dependence analysis for total soil respiration (Rs) and heterotrophic respiration (Rh) models](./pages/partial_dependecy.md)<br>
+<p align="center">
+  <a href="https://doi.org/10.1016/j.scitotenv.2026.181663"><img src="https://img.shields.io/badge/paper-Science%20of%20the%20Total%20Environment-18212f?style=for-the-badge"></a>
+  <a href="https://doi.org/10.5281/zenodo.14991466"><img src="https://img.shields.io/badge/final%20maps-Zenodo-1682D4?style=for-the-badge&logo=zenodo&logoColor=white"></a>
+  <img src="https://img.shields.io/badge/code-R-276DC3?style=for-the-badge&logo=r&logoColor=white">
+  <img src="https://img.shields.io/badge/domain-soil%20carbon%20feedback-2f6f73?style=for-the-badge">
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/resolution-1%20km-446b6f?style=flat-square">
+  <img src="https://img.shields.io/badge/model-Quantile%20Regression%20Forest-3b5b92?style=flat-square">
+  <img src="https://img.shields.io/badge/targets-Rs%20%2F%20Rh-744c24?style=flat-square">
+  <img src="https://img.shields.io/badge/scenarios-SSP1--2.6%20%7C%20SSP3--7.0%20%7C%20SSP5--8.5-5f6b7a?style=flat-square">
+  <img src="https://img.shields.io/badge/status-article%20support-8a5a16?style=flat-square">
+</p>
 
+<p align="center">
+  <a href="#paper-first">Paper First</a> |
+  <a href="#at-a-glance">At A Glance</a> |
+  <a href="#workflow">Workflow</a> |
+  <a href="#repository-map">Repository Map</a> |
+  <a href="#datasets">Datasets</a> |
+  <a href="#results">Results</a>
+</p>
 
-#### Datasets:
-- [Final dataset for total soil respiration (Rs) and covariates includes soil variables.](./datasets/finaldataset_rs_withsoil.csv)<br>
-- [Final dataset for heterotrophic respiration (Rh) and covariates includes soil variables.](./datasets/finaldataset_rh_withsoil.csv)<br>
-- [Final dataset for total soil respiration (Rs) and covariates excludes soil variables.](./datasets/finaldataset_rs_nosoil.csv)<br>
-- [Final dataset for heterotrophic respiration (Rh) and covariates excludes soil variables.](./datasets/finaldataset_rh_nosoil.csv)<br>
+<table align="center">
+  <tr>
+    <td align="center"><strong>Canonical citation</strong></td>
+  </tr>
+  <tr>
+    <td align="center">
+      Gomes, L. C.; Moquedace, C. M.; Souza, I. F.; Bond-Lamberty, B.; Vargas, R.; Vesterdal, L.; Veloso, G. V.; Francelino, M. R.; Schaefer, C. E. G. R.; Morris, K. A.; Fernandes-Filho, E. I. (2026).<br>
+      <em>On the importance of soil texture for predicting future global soil respiration</em>.<br>
+      <strong>Science of the Total Environment</strong>, 1027, 181663. <a href="https://doi.org/10.1016/j.scitotenv.2026.181663">https://doi.org/10.1016/j.scitotenv.2026.181663</a>
+    </td>
+  </tr>
+</table>
 
-#### Results:
-The final maps (mean, quantiles, and coefficient of variation) of soil respiration projections and their associated uncertainties are available for download on Zenodo:<br>
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14991466.svg)](https://doi.org/10.5281/zenodo.14991466)
+## Paper First
 
-### Attention:
+This repository supports the scientific article above. The article is the
+canonical source for methods, results, and interpretation; this repository
+organizes the code, tabular inputs, and links to final raster products.
+
+The study tests how including or excluding soil texture-related variables
+changes projections of total soil respiration (`Rs`) and heterotrophic
+respiration (`Rh`) under climate change scenarios up to 2100.
+
+## At A Glance
+
+<table>
+  <tr>
+    <td width="25%"><strong>Question</strong><br>How does soil texture affect future global Rs and Rh projections?</td>
+    <td width="25%"><strong>Data</strong><br>SRDB-V5 field observations plus climate, vegetation, and soil covariates.</td>
+    <td width="25%"><strong>Model</strong><br>Quantile Regression Forest with uncertainty outputs.</td>
+    <td width="25%"><strong>Scale</strong><br>Global 1 km predictions through 2100.</td>
+  </tr>
+  <tr>
+    <td><strong>Targets</strong><br>Total soil respiration (`Rs`) and heterotrophic respiration (`Rh`).</td>
+    <td><strong>Scenarios</strong><br>SSP1-2.6, SSP3-7.0, and SSP5-8.5.</td>
+    <td><strong>Comparison</strong><br>With-soil versus no-soil covariate configurations.</td>
+    <td><strong>Output</strong><br>Mean projections and uncertainty maps hosted on Zenodo.</td>
+  </tr>
+</table>
+
+## Workflow
+
+```mermaid
+flowchart LR
+  A["SRDB-V5 observations"] --> B["Rs and Rh datasets"]
+  C["Climate + NPP covariates"] --> D["Predictor stack"]
+  E["Soil texture and soil properties"] --> D
+  B --> F["Correlation filter + RFE"]
+  D --> F
+  F --> G["QRF model fitting"]
+  G --> H["Spatial cross-validation"]
+  G --> I["Future projections"]
+  I --> J["With-soil vs no-soil sensitivity"]
+  J --> K["Maps, uncertainty, partial dependence"]
+```
+
+## Repository Map
+
+```text
+.
+|-- datasets/                     # Model-ready Rs/Rh datasets
+|-- img/                          # Institutional logos and figure previews
+|-- pages/                        # Script walkthroughs and analysis notes
+|-- CITATION.cff
+`-- README.md
+```
+
+## Datasets
+
+| Dataset | Description |
+| --- | --- |
+| [`finaldataset_rs_withsoil.csv`](datasets/finaldataset_rs_withsoil.csv) | Total soil respiration dataset including soil variables. |
+| [`finaldataset_rh_withsoil.csv`](datasets/finaldataset_rh_withsoil.csv) | Heterotrophic respiration dataset including soil variables. |
+| [`finaldataset_rs_nosoil.csv`](datasets/finaldataset_rs_nosoil.csv) | Total soil respiration dataset excluding soil variables. |
+| [`finaldataset_rh_nosoil.csv`](datasets/finaldataset_rh_nosoil.csv) | Heterotrophic respiration dataset excluding soil variables. |
+
+## Code Walkthroughs
+
+| Page | Focus |
+| --- | --- |
+| [`distribution_samples.md`](pages/distribution_samples.md) | Distribution of samples across ecoregions and biome groups. |
+| [`global_model_ckfold.md`](pages/global_model_ckfold.md) | Global model training with spatially restricted data division. |
+| [`global_model_skfold.md`](pages/global_model_skfold.md) | Global model training without spatial restriction. |
+| [`performance_model_ckfold.md`](pages/performance_model_ckfold.md) | Model performance with spatially restricted data division. |
+| [`performance_model_skfold.md`](pages/performance_model_skfold.md) | Model performance without spatial restriction. |
+| [`partial_dependecy.md`](pages/partial_dependecy.md) | Partial dependence analysis for Rs and Rh models. |
+
+## Results
+
+Final maps and uncertainty products are available on Zenodo:
+
+| Resource | Link |
+| --- | --- |
+| Final maps | https://zenodo.org/records/14991466 |
+| DOI | `10.5281/zenodo.14991466` |
+| Products | Rs, Rh, and uncertainty projections for present and future scenarios. |
+
+<p align="center">
+  <img src="img/biome_group_sample.png" alt="Grouped biomes with Rs and Rh samples" width="760">
+</p>
+
+## Citation
+
+If you use this repository, cite the article above and the Zenodo record for
+the final maps. Machine-readable citation metadata is available in
+[`CITATION.cff`](CITATION.cff).
+
+## Contact
+
+For collaboration inquiries:
+
+- lucas.gomes@agro.au.dk
+- cassiomoquedace@gmail.com
+- labgeo@ufv.br
+
 The authors are not obligated to provide user support, updates, or bug fixes.
-
-### How to contribute:
-For more information or collaboration opportunities, please contact us at:  
-📧 **lucas.gomes@agro.au.dk**  
-📧 **cassiomoquedace@gmail.com**  
-📧 **labgeo@ufv.br**
-
-### Acknowledgments:
-We appreciate your interest in this research. We hope this repository facilitates result replication and contributes to future studies on soil carbon modeling and the application of machine learning in global soil respiration projections.
-
-### Reference:
-Gomes, L., Moquedace, C. M., Souza, I. F., Vesterdal, L., Veloso, G. V., Francelino, M. R., Schaefer, C., Morris, K. A., Vargas, R., Bond-Lamberty, B., & Fernandes Filho, E. I. (2026). On the importance of soil texture for predicting future global soil respiration. *Science of the Total Environment*, 1027, 181663. DOI: [10.1016/j.scitotenv.2026.181663](https://doi.org/10.1016/j.scitotenv.2026.181663)

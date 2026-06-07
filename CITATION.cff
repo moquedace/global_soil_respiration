@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the associated article and dataset."
+title: "On the importance of soil texture for predicting future global soil respiration"
+authors:
+  - family-names: "Gomes"
+    given-names: "Lucas Carvalho"
+  - family-names: "Moquedace"
+    given-names: "Cassio Marques"
+  - family-names: "Souza"
+    given-names: "Ivan F."
+  - family-names: "Bond-Lamberty"
+    given-names: "Ben"
+  - family-names: "Vargas"
+    given-names: "Rodrigo"
+  - family-names: "Vesterdal"
+    given-names: "Lars"
+  - family-names: "Veloso"
+    given-names: "Gustavo V."
+  - family-names: "Francelino"
+    given-names: "Marcio Rocha"
+  - family-names: "Schaefer"
+    given-names: "Carlos E. G. R."
+  - family-names: "Morris"
+    given-names: "Kendalynn A."
+  - family-names: "Fernandes-Filho"
+    given-names: "Elpidio I."
+year: 2026
+doi: "10.1016/j.scitotenv.2026.181663"
+repository-code: "https://github.com/moquedace/global_soil_respiration"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.14991466"
+    description: "Zenodo record for global soil respiration projections"
